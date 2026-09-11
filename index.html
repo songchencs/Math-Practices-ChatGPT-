@@ -8,13 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
       <a class="brand" href="#" aria-label="Mathly home"><span class="brand-mark">M</span>mathly</a>
-      <div class="streak"><span>✦</span> <strong>7</strong> day streak</div>
-      <button class="avatar" aria-label="Profile">JS</button>
+      <a class="dashboard-link" href="dashboard.html"><span>▦</span> Dashboard</a>
     </header>
 
     <section id="setupView" class="setup-layout">
@@ -31,17 +31,6 @@
       <form id="practiceForm" class="setup-card">
         <div class="card-heading"><div><p class="eyebrow">YOUR PRACTICE SET</p><h2>Choose your adventure</h2></div><span class="sparkle">✦</span></div>
         <fieldset>
-          <legend>What grade are you in?</legend>
-          <div class="grade-grid" id="gradeGrid">
-            <button type="button" class="grade active" data-grade="3">3<sup>rd</sup></button>
-            <button type="button" class="grade" data-grade="4">4<sup>th</sup></button>
-            <button type="button" class="grade" data-grade="5">5<sup>th</sup></button>
-            <button type="button" class="grade" data-grade="6">6<sup>th</sup></button>
-            <button type="button" class="grade" data-grade="7">7<sup>th</sup></button>
-            <button type="button" class="grade" data-grade="8">8<sup>th</sup></button>
-          </div>
-        </fieldset>
-        <fieldset>
           <legend>Pick your concepts <span>choose one or more</span></legend>
           <div class="concepts" id="concepts">
             <label class="concept selected"><input type="checkbox" value="addition" checked><span class="icon orange">+</span><span>Addition</span><i>✓</i></label>
@@ -50,6 +39,10 @@
             <label class="concept"><input type="checkbox" value="division"><span class="icon teal">÷</span><span>Division</span><i>✓</i></label>
             <label class="concept"><input type="checkbox" value="fractions"><span class="icon blue">½</span><span>Fractions</span><i>✓</i></label>
             <label class="concept"><input type="checkbox" value="geometry"><span class="icon yellow">△</span><span>Geometry</span><i>✓</i></label>
+            <label class="concept"><input type="checkbox" value="decimals"><span class="icon teal">.5</span><span>Decimals</span><i>✓</i></label>
+            <label class="concept"><input type="checkbox" value="percentages"><span class="icon orange">%</span><span>Percentages</span><i>✓</i></label>
+            <label class="concept"><input type="checkbox" value="exponents"><span class="icon purple">x²</span><span>Exponents</span><i>✓</i></label>
+            <label class="concept"><input type="checkbox" value="measurement"><span class="icon pink">↔</span><span>Measurement</span><i>✓</i></label>
           </div>
         </fieldset>
         <fieldset>
