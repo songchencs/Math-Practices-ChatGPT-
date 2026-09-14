@@ -11,9 +11,12 @@ async function loadDashboard() {
   const values = [stats.visitors, stats.problems, stats.sessions, `${stats.accuracy}%`];
   document.querySelectorAll('.metric-grid strong').forEach((node, index) => node.textContent = values[index]);
   const locations = document.querySelector('.locations');
-  if (locations && stats.locales?.length) {
-    const max = Math.max(...stats.locales.map(item => item.visitors), 1);
-    locations.innerHTML = stats.locales.map(item => `<div><span>◉</span><b>${item.location}</b><em>${item.visitors} visitors</em><i style="width:${Math.round(item.visitors / max * 76)}%"></i></div>`).join('');
+  const cityLocations = (stats.locales || []).filter(item => !/^[a-z]{2}-[A-Z]{2}$/.test(item.location));
+  if (locations && cityLocations.length) {
+    const max = Math.max(...cityLocations.map(item => item.visitors), 1);
+    locations.innerHTML = cityLocations.map(item => `<div><span>◉</span><b>${item.location}</b><em>${item.visitors} visitors</em><i style="width:${Math.round(item.visitors / max * 76)}%"></i></div>`).join('');
+  } else if (locations) {
+    locations.innerHTML = '<div><span>◉</span><b>No city/state data yet</b><em>New visits will appear here</em><i style="width:0%"></i></div>';
   }
   document.querySelector('.dashboard-heading p:not(.eyebrow)').textContent = 'Live totals from Mathly practice sessions.';
   document.querySelector('.live-pill').innerHTML = '<i></i> Live data';
