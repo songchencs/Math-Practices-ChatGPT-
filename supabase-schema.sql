@@ -16,7 +16,7 @@ create or replace function public.dashboard_stats() returns jsonb language sql s
     'problems', (select count(*) from analytics_events where event_type = 'problem_answered'),
     'sessions', (select count(*) from analytics_events where event_type = 'practice_completed'),
     'accuracy', coalesce((select round(100.0 * avg((metadata->>'correct')::int), 0) from analytics_events where event_type = 'problem_answered'), 0),
-    'locales', coalesce((select jsonb_agg(row_to_json(x)) from (select locale, count(*)::int as visitors from analytics_events group by locale order by visitors desc limit 4) x), '[]'::jsonb)
+    'locales', coalesce((select jsonb_agg(jsonb_build_object('locale', locale, 'visitors', visitors)) from (select locale, count(*)::int as visitors from analytics_events group by locale order by visitors desc limit 4) x), '[]'::jsonb)
   );
 $$;
 revoke all on function public.dashboard_stats() from public;
