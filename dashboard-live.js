@@ -13,9 +13,11 @@ async function loadDashboard() {
   const locations = document.querySelector('.locations');
   if (locations && stats.locales?.length) {
     const max = Math.max(...stats.locales.map(item => item.visitors), 1);
-    locations.innerHTML = stats.locales.map(item => `<div><span>◉</span><b>${item.locale}</b><em>${item.visitors} visitors</em><i style="width:${Math.round(item.visitors / max * 76)}%"></i></div>`).join('');
+    locations.innerHTML = stats.locales.map(item => `<div><span>◉</span><b>${item.location}</b><em>${item.visitors} visitors</em><i style="width:${Math.round(item.visitors / max * 76)}%"></i></div>`).join('');
   }
   document.querySelector('.dashboard-heading p:not(.eyebrow)').textContent = 'Live totals from Mathly practice sessions.';
   document.querySelector('.live-pill').innerHTML = '<i></i> Live data';
+  const locationPanel = document.querySelector('.locations')?.closest('.panel');
+  if (locationPanel) { locationPanel.querySelector('.eyebrow').textContent = 'VISITOR LOCATIONS'; locationPanel.querySelector('h2').textContent = 'Top cities & states'; }
 }
 loadDashboard();

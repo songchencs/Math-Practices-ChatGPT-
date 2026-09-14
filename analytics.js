@@ -8,8 +8,8 @@ if (cfg?.url && cfg?.publishableKey && window.supabase) {
   const locale = navigator.language || 'unknown';
   window.mathlyAnalytics = {
     track: async (eventType, metadata = {}) => {
-      const { error } = await client.from('analytics_events').insert({ visitor_id: visitorId, event_type: eventType, locale, metadata });
-      if (error) console.warn('Analytics event was not recorded.', error.message);
+      const response = await fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ visitor_id: visitorId, event_type: eventType, locale, metadata }) });
+      if (!response.ok) console.warn('Analytics event was not recorded.');
     },
     dashboard: async () => {
       const { data, error } = await client.rpc('dashboard_stats');
