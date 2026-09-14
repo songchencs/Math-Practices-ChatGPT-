@@ -1,6 +1,13 @@
 async function loadDashboard() {
-  const stats = await window.mathlyAnalytics.dashboard();
-  if (!stats) return;
+  const cfg = window.MATHLY_SUPABASE;
+  if (!cfg) return;
+  const response = await fetch(`${cfg.url}/rest/v1/rpc/dashboard_stats`, {
+    method: 'POST',
+    headers: { apikey: cfg.publishableKey, Authorization: `Bearer ${cfg.publishableKey}`, 'Content-Type': 'application/json' },
+    body: '{}'
+  });
+  if (!response.ok) return;
+  const stats = await response.json();
   const values = [stats.visitors, stats.problems, stats.sessions, `${stats.accuracy}%`];
   document.querySelectorAll('.metric-grid strong').forEach((node, index) => node.textContent = values[index]);
   const locations = document.querySelector('.locations');
