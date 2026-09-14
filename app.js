@@ -5,7 +5,12 @@ document.querySelectorAll('.concept').forEach(label => label.addEventListener('c
   setTimeout(() => { label.classList.toggle('selected', label.querySelector('input').checked); }, 0);
 }));
 $('#minus').onclick = () => changeCount(-1); $('#plus').onclick = () => changeCount(1);
-function changeCount(n){ state.count = Math.max(1, Math.min(50, state.count + n)); $('#quantity').textContent = state.count; }
+$('#quantity').addEventListener('input', () => {
+  const value = Number($('#quantity').value);
+  if (Number.isFinite(value)) state.count = Math.max(1, Math.min(50, Math.round(value)));
+});
+$('#quantity').addEventListener('change', () => { $('#quantity').value = state.count; });
+function changeCount(n){ state.count = Math.max(1, Math.min(50, state.count + n)); $('#quantity').value = state.count; }
 
 function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function makeQuestion(type){

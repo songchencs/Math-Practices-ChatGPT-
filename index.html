@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="dashboard.css" />
+  <style>.quantity input{font:800 20px 'DM Mono',monospace;min-width:45px;width:58px;text-align:center;border:0;background:transparent;color:#27253b;outline:none}.quantity input::-webkit-inner-spin-button,.quantity input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}</style>
 </head>
 <body>
   <main class="app-shell">
@@ -47,7 +48,7 @@
         </fieldset>
         <fieldset>
           <legend>How many questions?</legend>
-          <div class="quantity"><button type="button" id="minus" aria-label="Fewer questions">−</button><output id="quantity">10</output><button type="button" id="plus" aria-label="More questions">+</button><span>questions</span></div>
+          <div class="quantity"><button type="button" id="minus" aria-label="Fewer questions">−</button><input id="quantity" type="number" min="1" max="50" value="10" aria-label="Number of questions"><button type="button" id="plus" aria-label="More questions">+</button><span>questions</span></div>
         </fieldset>
         <button id="startBtn" class="start-btn" type="submit">Start my practice <span>→</span></button>
       </form>
