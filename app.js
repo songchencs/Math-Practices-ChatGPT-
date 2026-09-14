@@ -27,7 +27,21 @@ function renderQuestion(){
   const q=state.questions[state.index]; $('#counter').textContent=`Question ${state.index+1} of ${state.count}`; $('#progressFill').style.width=`${((state.index)/state.count)*100}%`;
   $('#conceptBadge').textContent=labels[q.type].toUpperCase(); $('#question').innerHTML=`${q.text} = <span>?</span>`; $('#answer').value=''; $('#answer').focus(); $('#feedback').textContent=''; $('#feedback').className='feedback';
 }
-$('#practiceForm').addEventListener('submit', e => { e.preventDefault(); const selected=[...document.querySelectorAll('.concept input:checked')].map(i=>i.value); if(!selected.length){ alert('Pick at least one math concept to get started.'); return; } state.concepts=selected; state.questions=Array.from({length:state.count},()=>makeQuestion(selected[rand(0,selected.length-1)])); state.index=0; state.correct=0; state.startedAt=Date.now(); window.mathlyAnalytics?.track?.('practice_started', { questions: state.count, concepts: selected }); $('#correctCount').textContent=0; $('#setupView').classList.add('hidden'); $('#practiceView').classList.remove('hidden'); renderQuestion(); });
+function startPractice(e) {
+  e?.preventDefault();
+  const selected = [...document.querySelectorAll('.concept input:checked')].map(i => i.value);
+  if (!selected.length) { alert('Pick at least one math concept to get started.'); return; }
+  state.concepts = selected;
+  state.questions = Array.from({length: state.count}, () => makeQuestion(selected[rand(0, selected.length - 1)]));
+  state.index = 0; state.correct = 0; state.startedAt = Date.now();
+  window.mathlyAnalytics?.track?.('practice_started', { questions: state.count, concepts: selected });
+  $('#correctCount').textContent = 0;
+  $('#setupView').classList.add('hidden');
+  $('#practiceView').classList.remove('hidden');
+  renderQuestion();
+}
+$('#practiceForm').addEventListener('submit', startPractice);
+$('#startBtn').addEventListener('click', startPractice);
 $('#answerForm').addEventListener('submit', e => { e.preventDefault(); const q=state.questions[state.index], entered=$('#answer').value.trim().replace(/\s/g,''); if(!entered) return; const right=String(q.answer)===entered; window.mathlyAnalytics?.track?.('problem_answered', { correct: right ? 1 : 0, concept: q.type }); const feedback=$('#feedback'); feedback.textContent=right?'Correct! Beautiful work. ✦':'Not quite — give the next one a try!'; feedback.className=`feedback ${right?'good':'bad'}`; if(right){state.correct++; $('#correctCount').textContent=state.correct;} setTimeout(next, right?750:1050); });
 $('#skipBtn').onclick=next;
 function next(){ state.index++; if(state.index>=state.count) return finish(); renderQuestion(); }
